@@ -1,0 +1,9 @@
+-- Table comments
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    content VARCHAR(400) NOT NULL,
+    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    answers VARCHAR(20) DEFAULT NULL,
+    likes INT DEFAULT 0,
+    dislikes INT DEFAULT 0
+);
