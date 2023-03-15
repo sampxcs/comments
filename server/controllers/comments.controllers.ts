@@ -4,6 +4,8 @@ import { Request, Response } from 'express'
 // Get comments
 export const getComments = async (req: Request, res: Response) => {
   const [result] = await pool.query('SELECT * FROM comments ORDER BY createdAt ASC')
+
+  res.header('Access-Control-Allow-Origin', '*')
   res.json(result)
 }
 

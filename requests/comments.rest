@@ -13,7 +13,7 @@ POST http://localhost:4000/comments
 Content-Type: application/json
 
 {
-    "content": "Mensaje guardado en MySQL server usando Docker" 
+    "content": "Otro mensaje guardado en MySQL server usando Docker" 
 }
 
 ### 

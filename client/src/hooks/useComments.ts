@@ -11,6 +11,7 @@ export default function useComments() {
 
   useEffect(() => {
     getComments().then((commentsFromApi: []) => {
+      console.log(commentsFromApi)
       const comments = commentsFromApi.map(({ id, body }) => {
         return {
           id,

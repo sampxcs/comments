@@ -7,7 +7,7 @@ import useComments from './hooks/useComments'
 import Layout from './components/Layout'
 
 function App() {
-  // useComments()
+  useComments()
 
   return (
     <div className='App'>

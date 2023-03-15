@@ -7,6 +7,7 @@ export default function CommentsList() {
   const comments = useSelector((state: commentState) => state.comments)
   const commentsSort = comments.slice().reverse()
 
+  console.log(comments)
   return (
     <div className='comments-container'>
       {commentsSort.length > 0 ? (

@@ -1,5 +1,5 @@
 const getComments = () => {
-  return fetch('https://jsonplaceholder.typicode.com/comments')
+  return fetch('http://localhost:4000/comments')
     .then((res) => res.json())
     .then((comments) => comments)
 }
