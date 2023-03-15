@@ -7,13 +7,12 @@ export default function CommentsList() {
   const comments = useSelector((state: commentState) => state.comments)
   const commentsSort = comments.slice().reverse()
 
-  console.log(comments)
   return (
     <div className='comments-container'>
       {commentsSort.length > 0 ? (
-        commentsSort.map(({ content, id, answers, date, likes, dislikes, avatar }) => {
+        commentsSort.map(({ content, id, answers, createdAt, likes, dislikes, avatar }) => {
           return (
-            <Comment key={id} content={content} id={id} answers={answers} date={date} likes={likes} dislikes={dislikes} avatar={avatar} />
+            <Comment key={id} content={content} id={id} answers={answers} createdAt={createdAt} likes={likes} dislikes={dislikes} avatar={avatar} />
           )
         })
       ) : (

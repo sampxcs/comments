@@ -1,6 +1,6 @@
 # MERN Stack with MySQL Server
 
-This project is a mern stack to add anonymous comments, Node.js is used for the backend with TypeScript, Express and MySQL for the database. to raise the MySQL server it should be done from Docker. The FrontEnd of the project is in the `client` folder, it is created with the `create-react-app` command and has a README.md with more instructions.
+This project is a MERN Stack to add anonymous comments, Node.js is used for the backend with TypeScript, Express and MySQL for the database. to raise the MySQL server it should be done from Docker. The FrontEnd of the project is in the `client` folder, it is created with the `create-react-app` command and has a README.md with more instructions.
 
 ## Available Scripts
 

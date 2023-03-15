@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import { dislikeComment, likeComment } from '../../store/features/commentSlice'
 import AnswersList from '../Answers/AnswersList'
 
-export default function Comment({ content, answers, date, likes, dislikes, id, avatar }: comment) {
+export default function Comment({ content, answers, createdAt, likes, dislikes, id, avatar }: comment) {
   const dispatch = useDispatch()
   const [showAnswers, setShowAnswers] = useState(false)
 
@@ -26,15 +26,15 @@ export default function Comment({ content, answers, date, likes, dislikes, id, a
     showAnswers && setShowAnswers(false)
     !showAnswers && setShowAnswers(true)
   }
-
+  
   return (
     <div className='comment'>
       <div className='comment-content'>
         <img className='comment-avatar' src={`data:image/svg+xml;utf8,${avatar}`} alt='avatar' />
         {content}
       </div>
-      <div className='comment-date' title={date}>
-        {date}
+      <div className='comment-date' title={createdAt}>
+        {createdAt}
       </div>
       <div className='comment-data'>
         <div className='comment-data-buttons'>

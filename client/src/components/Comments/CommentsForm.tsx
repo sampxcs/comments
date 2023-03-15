@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import useAvatar from '../../hooks/useAvatar'
+import useComments from '../../hooks/useComments'
 import { addComment } from '../../store/features/commentSlice'
-import { comment } from '../../types'
-
+import { commentRequest } from '../../types'
+import { useDispatch } from 'react-redux'
 import EarthIcon from '../Icons/EarthIcon'
 import ImageIcon from '../Icons/ImageIcon'
 import LocationIcon from '../Icons/LocationIcon'
@@ -13,46 +13,33 @@ const initialInputValues = {
   content: '',
 }
 
-const formatDate = (date: Date) => {
-  let day: string | number = date.getDate()
-  let month: string | number = date.getMonth()
-  let year: string | number = date.getFullYear()
-  let hours: string | number = date.getHours()
-  let monutes: string | number = date.getMinutes()
-
-  if (day < 10) day = `0${day}`
-  if (month < 10) month = `0${month}`
-  if (hours < 10) hours = `0${hours}`
-  if (monutes < 10) monutes = `0${monutes}`
-
-  return `${day}-${month}-${year} ${hours}:${monutes}`
-}
-
 export default function Form() {
   const dispatch = useDispatch()
   const { generateAvatar } = useAvatar()
+  const {createComment} = useComments()
   const [inputValues, setInputValues] = useState(initialInputValues)
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
-    const id = Math.floor(Math.random() * 99999999)
-    const date = formatDate(new Date())
     const avatar = await generateAvatar()
     const { content } = inputValues
 
-    const comment: comment = {
-      avatar,
-      id,
-      date,
+    const commentRequest: commentRequest = {
       content,
-      answers: [],
-      likes: 0,
-      dislikes: 0,
+      answers: "[]",
+      avatar,
     }
 
-    dispatch(addComment(comment))
+    console.log(JSON.stringify(commentRequest) )
+
+    const newComment = await createComment(commentRequest)
+
+    console.log(newComment)
+
+    dispatch(addComment(newComment))
+    
     setInputValues(initialInputValues)
     setLoading(false)
   }

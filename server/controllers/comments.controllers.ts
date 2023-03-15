@@ -22,7 +22,7 @@ export const getComment = async (req: Request, res: Response) => {
 // Create comment
 export const createComments = async (req: Request, res: Response) => {
   const data = req.body
-  const [newComment]: any = await pool.query('INSERT INTO comments (content) VALUES (?)', [data.content]) // Arreglar type
+  const [newComment]: any = await pool.query('INSERT INTO comments (content, answers, avatar) VALUES (?,?,?)', [data.content, data.answers, data.avatar]) // Arreglar type
 
   const [result]: any = await pool.query(`SELECT * FROM comments WHERE id = ${newComment.insertId}`) // Resolver types
   res.status(201).json(result[0])

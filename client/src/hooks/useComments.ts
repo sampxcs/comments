@@ -1,30 +1,26 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import getComments from '../services/getComments'
+import postComment from '../services/postComment'
 import { initComments } from '../store/features/commentSlice'
 
-import { commentState } from '../types'
+import { commentRequest, comments, commentState } from '../types'
 
 export default function useComments() {
   const comments = useSelector((state: commentState) => state.comments)
   const dispatch = useDispatch()
 
+  const createComment = async (data: commentRequest) => {
+    const comment = await postComment(data)
+    return comment
+  }
+
   useEffect(() => {
-    getComments().then((commentsFromApi: []) => {
-      console.log(commentsFromApi)
-      const comments = commentsFromApi.map(({ id, body }) => {
-        return {
-          id,
-          content: body,
-          date: '04/12/2022 13:45',
-          answers: [],
-          likes: Math.floor(Math.random() * 1000 + 1),
-          dislikes: Math.floor(Math.random() * 1000 + 1),
-        }
-      })
+    getComments().then((comments: comments) => {
+      console.log(comments)
       dispatch(initComments(comments))
     })
   }, [dispatch])
 
-  return comments
+  return {createComment, comments}
 }
