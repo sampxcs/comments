@@ -2,9 +2,10 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import getComments from '../services/getComments'
 import postComment from '../services/postComment'
+import putComment from '../services/putComment'
 import { initComments } from '../store/features/commentSlice'
 
-import { commentRequest, comments, commentState } from '../types'
+import { comment, commentRequest, comments, commentState } from '../types'
 
 export default function useComments() {
   const comments = useSelector((state: commentState) => state.comments)
@@ -15,12 +16,16 @@ export default function useComments() {
     return comment
   }
 
+  const updateComment = async (data: comment) => {
+    const comment = await putComment(data)
+    return comment
+  }
+
   useEffect(() => {
     getComments().then((comments: comments) => {
-      console.log(comments)
       dispatch(initComments(comments))
     })
   }, [dispatch])
 
-  return {createComment, comments}
+  return { createComment, updateComment, comments }
 }

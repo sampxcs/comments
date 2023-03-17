@@ -10,14 +10,6 @@ export interface comment {
 
 export type comments = comment[]
 
-export interface answer {
-  avatar: string
-  id: number
-  content: string
-}
-
-export type answers = answer[]
-
 export interface commentState {
   comments: comments
 }
@@ -26,6 +18,26 @@ export interface commentRequest {
   avatar: string
   content: string
   answers: string
+  likes?: number
+  dislikes?: number
+}
+
+export type commentId = {
+  id: number
+}
+
+export interface answer {
+  avatar: string
+  id: number
+  content: string
+}
+
+export type answers = answer[]
+
+export type answersState = {
+  showAnswers: boolean
+  id: number
+  answers: answers
 }
 
 export type icon = {

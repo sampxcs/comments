@@ -1,51 +1,41 @@
 import { comment } from '../../types'
-// import useAvatar from '../hooks/useAvatar'
 
 import CommentIcon from '../Icons/CommentIcon'
 import ArrowUpIcon from '../Icons/ArrowUpIcon'
 import ArrowDownIcon from '../Icons/ArrowDownIcon'
 import { useState } from 'react'
-
-import { useDispatch } from 'react-redux'
-import { dislikeComment, likeComment } from '../../store/features/commentSlice'
 import AnswersList from '../Answers/AnswersList'
+import useCommentsForm from '../../hooks/useCommentsForm'
 
-export default function Comment({ content, answers, createdAt, likes, dislikes, id, avatar }: comment) {
-  const dispatch = useDispatch()
+export default function Comment(comment: comment) {
+  const { content, answers, createdAt, likes, dislikes, id, avatar } = comment
+  const { handleLike, handleDislike } = useCommentsForm()
   const [showAnswers, setShowAnswers] = useState(false)
-
-  const handleLike = (id: number) => {
-    dispatch(likeComment(id))
-  }
-
-  const handleDislike = (id: number) => {
-    dispatch(dislikeComment(id))
-  }
 
   const handleShowAnswers = () => {
     showAnswers && setShowAnswers(false)
     !showAnswers && setShowAnswers(true)
   }
-  
+
   return (
     <div className='comment'>
       <div className='comment-content'>
-        <img className='comment-avatar' src={`data:image/svg+xml;utf8,${avatar}`} alt='avatar' />
+        <img className='comment-avatar' src={`data:image/svg+xml;utf8,${avatar}`} alt='avatar' title='Anonymous' />
         {content}
       </div>
       <div className='comment-date' title={createdAt}>
-        {createdAt}
+        {createdAt.split('T')[0]}
       </div>
       <div className='comment-data'>
         <div className='comment-data-buttons'>
           <div className='comment-data-likes'>
-            <div className='comment-dislike-button' onClick={() => handleDislike(id)}>
-              <span className='comment-data-icon'>
+            <div className='comment-dislike-button' onClick={() => handleDislike(comment)}>
+              <span className='comment-data-icon' title='Dislike'>
                 <ArrowDownIcon width='0.75rem' />
               </span>
             </div>
-            <div className='comment-like-button' onClick={() => handleLike(id)}>
-              <span className='comment-data-icon'>
+            <div className='comment-like-button' onClick={() => handleLike(comment)}>
+              <span className='comment-data-icon' title='Like'>
                 <ArrowUpIcon width='0.75rem' />
               </span>
             </div>

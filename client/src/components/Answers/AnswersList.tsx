@@ -1,13 +1,7 @@
 import AnswersForm from './AnswersForm'
 import Answer from './Answer'
 
-import { answers } from '../../types'
-
-type answersState = {
-  showAnswers: boolean
-  id: number
-  answers: answers
-}
+import { answersState } from '../../types'
 
 export default function AnswersList({ id, showAnswers, answers }: answersState) {
   return (

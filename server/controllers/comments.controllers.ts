@@ -22,16 +22,23 @@ export const getComment = async (req: Request, res: Response) => {
 // Create comment
 export const createComments = async (req: Request, res: Response) => {
   const data = req.body
-  const [newComment]: any = await pool.query('INSERT INTO comments (content, answers, avatar) VALUES (?,?,?)', [data.content, data.answers, data.avatar]) // Arreglar type
+  const [newComment]: any = await pool.query('INSERT INTO comments (content, answers, avatar) VALUES (?,?,?)', [
+    data.content,
+    data.answers,
+    data.avatar,
+  ]) // Arreglar type
 
   const [result]: any = await pool.query(`SELECT * FROM comments WHERE id = ${newComment.insertId}`) // Resolver types
   res.status(201).json(result[0])
 }
 
 // Update comment
-export const updateComments = (req: Request, res: Response) => {
+export const updateComments = async (req: Request, res: Response) => {
   const id = req.params.id
-  res.json(`Update Comment ${id}`)
+  const data = req.body
+  const [comment]: any = await pool.query(`UPDATE comments SET likes = ${data.likes}, dislikes = ${data.dislikes} WHERE id = ${id}`)
+
+  res.json(comment)
 }
 
 // Delete comment

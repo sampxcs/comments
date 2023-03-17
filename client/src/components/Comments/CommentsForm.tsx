@@ -1,60 +1,23 @@
-import { useState } from 'react'
-import useAvatar from '../../hooks/useAvatar'
-import useComments from '../../hooks/useComments'
-import { addComment } from '../../store/features/commentSlice'
-import { commentRequest } from '../../types'
-import { useDispatch } from 'react-redux'
 import EarthIcon from '../Icons/EarthIcon'
 import ImageIcon from '../Icons/ImageIcon'
 import LocationIcon from '../Icons/LocationIcon'
 import Spinner from '../Spinner'
+import useCommentsForm from '../../hooks/useCommentsForm'
 
-const initialInputValues = {
-  content: '',
-}
-
-export default function Form() {
-  const dispatch = useDispatch()
-  const { generateAvatar } = useAvatar()
-  const {createComment} = useComments()
-  const [inputValues, setInputValues] = useState(initialInputValues)
-  const [loading, setLoading] = useState(false)
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setLoading(true)
-    const avatar = await generateAvatar()
-    const { content } = inputValues
-
-    const commentRequest: commentRequest = {
-      content,
-      answers: "[]",
-      avatar,
-    }
-
-    console.log(JSON.stringify(commentRequest) )
-
-    const newComment = await createComment(commentRequest)
-
-    console.log(newComment)
-
-    dispatch(addComment(newComment))
-    
-    setInputValues(initialInputValues)
-    setLoading(false)
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValues({
-      ...inputValues,
-      [e.target.name]: e.target.value,
-    })
-  }
+export default function CommentsForm() {
+  const { handleSubmit, handleChange, loading, inputValues } = useCommentsForm()
 
   return (
     <form className='comment-form' onSubmit={handleSubmit}>
       <div className='textarea-container'>
-        <textarea value={inputValues.content} name='content' placeholder='Agrega tu comentario...' onChange={handleChange} required />
+        <textarea
+          autoFocus
+          name='content'
+          onChange={handleChange}
+          placeholder='Agrega tu comentario...'
+          required
+          value={inputValues.content}
+        />
         <small>
           <EarthIcon width='0.75rem' /> Una vez publicado no lo podras borrar, cualquier persona puede responder
         </small>
