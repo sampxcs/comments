@@ -14,12 +14,12 @@ export default function CommentsForm() {
           autoFocus
           name='content'
           onChange={handleChange}
-          placeholder='Agrega tu comentario...'
+          placeholder='Add your comment...'
           required
           value={inputValues.content}
         />
         <small>
-          <EarthIcon width='0.75rem' /> Una vez publicado no lo podras borrar, cualquier persona puede responder
+          <EarthIcon width='0.75rem' /> Once published you will not be able to delete it, anyone can respond.
         </small>
       </div>
       <div className='buttons'>
@@ -31,7 +31,7 @@ export default function CommentsForm() {
             <LocationIcon width='1.25rem' />
           </div>
         </div>
-        <button disabled={loading}>{loading ? <Spinner /> : 'Comentar'}</button>
+        <button disabled={loading}>{loading ? <Spinner /> : 'Send'}</button>
       </div>
     </form>
   )

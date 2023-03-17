@@ -19,11 +19,16 @@ export default function Comment(comment: comment) {
 
   return (
     <div className='comment'>
+      {answers.length && showAnswers ? <div className='history-line'/> : ""}
       <div className='comment-content'>
-        <img className='comment-avatar' src={`data:image/svg+xml;utf8,${avatar}`} alt='avatar' title='Anonymous' />
-        {content}
-      </div>
-      <div className='comment-date' title={createdAt}>
+        <div className='avatar-container'>
+          <img className='comment-avatar' src={`data:image/svg+xml;utf8,${avatar}`} alt='avatar' title='Anonymous' />
+        </div>
+        <div className='comment-right'>
+        <div className='comment-text'>
+          {content}
+        </div>
+        <div className='comment-date' title={createdAt}>
         {createdAt.split('T')[0]}
       </div>
       <div className='comment-data'>
@@ -49,20 +54,23 @@ export default function Comment(comment: comment) {
         </div>
         {likes > 0 && dislikes > 0 && (
           <span className='comment-data-info'>
-            A {likes} {likes === 1 ? 'le' : 'les'} gusta este comentario y a {dislikes} no {dislikes === 1 ? 'le' : 'les'} gusta
+            {likes} likes & {dislikes} dislikes
           </span>
         )}
         {likes > 0 && dislikes === 0 && (
           <span className='comment-data-info'>
-            A {likes} {likes === 1 ? 'le' : 'les'} gusta este comentario
+            {likes} likes
           </span>
         )}
         {likes === 0 && dislikes > 0 && (
           <span className='comment-data-info'>
-            A {dislikes} no {dislikes === 1 ? 'le' : 'les'} gusta este comentario
+            {dislikes} dislikes
           </span>
         )}
       </div>
+        </div>
+      </div>
+      
       {answers && <AnswersList id={id} showAnswers={showAnswers} answers={answers} />}
     </div>
   )

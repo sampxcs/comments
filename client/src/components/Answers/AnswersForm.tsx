@@ -9,7 +9,7 @@ export default function AnswersForm(commentId: commentId) {
 
   return (
     <form className='answers-form' onSubmit={handleSubmit}>
-      <input value={inputValues.content} autoFocus name='content' placeholder='Agrega una respuesta...' onChange={handleChange} required />
+      <input value={inputValues.content} autoFocus name='content' placeholder='Add an answer...' onChange={handleChange} required />
       <button disabled={loading}>{loading ? <Spinner /> : <PaperPlaneIcon width='0.75rem' />}</button>
     </form>
   )
