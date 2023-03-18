@@ -11,6 +11,8 @@
 .content {
   background-color: #111;
   padding-top: 1rem;
+  min-height: 100vh;
+  scroll-behavior: smooth;
 }
 *::-webkit-scrollbar {
   width: 0.5rem;
@@ -56,9 +58,21 @@
 }
 .nav-button:hover {
   color: #fff;
+  background-color: #fff1;
 }
 .nav-button-active {
   color: #fff;
+}
+.nav-button-active::before {
+  content: '';
+  width: 3rem;
+  height: 0.25rem;
+  border-radius: 1rem;
+  background-color: #0089e4;
+  position: absolute;
+  left: calc(50% - 1.5rem);
+  bottom: 0;
+  animation: show 0.2s ease forwards;
 }
 
 .avatar-container {
@@ -72,7 +86,7 @@
 .history-line {
   position: absolute;
   width: 2px;
-  height: calc(100% - 8.5rem);
+  height: calc(100% - 9rem);
   background-color: #fff2;
   top: 2rem;
   left: 1.92rem;
@@ -84,6 +98,7 @@
   display: flex;
   margin-top: 0.25rem;
   gap: 0.25rem;
+  animation: show-down 0.2s ease forwards;
 }
 .answers-form input {
   border: 1px solid #9994;
@@ -126,6 +141,7 @@
   display: flex;
   gap: 0.5rem;
   font-size: 1rem;
+  animation: show-down 0.2s ease forwards;
 }
 .answer-text {
   color: #fffc;
@@ -195,11 +211,15 @@
   width: 100%;
   background: none;
   border: none;
-  height: 8rem;
+  transition: 0.2s ease;
+  height: 4rem;
   font-size: 1.5rem;
   resize: none;
   color: #fff;
   outline: none;
+}
+.textarea-container textarea:focus {
+  height: 8rem;
 }
 .textarea-container small {
   color: #1d9bf0;
@@ -256,6 +276,7 @@
 .buttons button:disabled {
   cursor: default;
   background-color: #0089e4;
+  opacity: 65%;
   pointer-events: none;
 }
 .buttons button:hover {
@@ -390,7 +411,8 @@
     width: 100%;
     height: 51rem;
     overflow-y: scroll;
-    background-color: #111;
+    padding-left: 0.5rem;
+    min-height: max-content;
   }
   .App {
     align-items: center;

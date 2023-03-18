@@ -1,10 +1,9 @@
 import useAnswersForm from '../../hooks/useAnswersForm'
-import { commentId } from '../../types'
 
 import PaperPlaneIcon from '../Icons/PaperPlaneIcon'
 import Spinner from '../Spinner'
 
-export default function AnswersForm(commentId: commentId) {
+export default function AnswersForm({ commentId }: { commentId: number }) {
   const { handleSubmit, handleChange, loading, inputValues } = useAnswersForm(commentId)
 
   return (

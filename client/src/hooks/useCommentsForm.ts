@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import useAvatar from './useAvatar'
 import useComments from './useComments'
-import { addComment, dislikeComment, likeComment } from '../store/features/commentSlice'
+import { addComment, dislikeComment, likeComment, sortComments } from '../store/features/commentSlice'
 import { comment, commentRequest } from '../types'
 import { useDispatch } from 'react-redux'
 
@@ -15,6 +15,8 @@ export default function useCommentsForm() {
   const { createComment, updateComment } = useComments()
   const [inputValues, setInputValues] = useState(INITIAL_INPUT_VALUES)
   const [loading, setLoading] = useState(false)
+  const [showAnswers, setShowAnswers] = useState(false)
+  const [sortState, setSortState] = useState('main')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -29,9 +31,6 @@ export default function useCommentsForm() {
     }
 
     const newComment = await createComment(commentRequest)
-
-    console.log(newComment)
-
     dispatch(addComment(newComment))
 
     setInputValues(INITIAL_INPUT_VALUES)
@@ -65,5 +64,26 @@ export default function useCommentsForm() {
     dispatch(dislikeComment(comment.id))
   }
 
-  return { handleSubmit, handleChange, handleLike, handleDislike, loading, inputValues }
+  const handleShowAnswers = () => {
+    showAnswers && setShowAnswers(false)
+    !showAnswers && setShowAnswers(true)
+  }
+
+  const handleSortComments = (sortBy: string) => {
+    setSortState(sortBy)
+    dispatch(sortComments(sortBy))
+  }
+
+  return {
+    handleSubmit,
+    handleChange,
+    handleLike,
+    handleDislike,
+    handleShowAnswers,
+    handleSortComments,
+    loading,
+    inputValues,
+    showAnswers,
+    sortState,
+  }
 }

@@ -22,21 +22,20 @@ export interface commentRequest {
   dislikes?: number
 }
 
-export type commentId = {
-  id: number
-}
-
 export interface answer {
   avatar: string
-  id: number
+  commentId: number
   content: string
+  dislikes: number
+  id: number
+  likes: number
 }
 
 export type answers = answer[]
 
 export type answersState = {
   showAnswers: boolean
-  id: number
+  commentId: number
   answers: answers
 }
 

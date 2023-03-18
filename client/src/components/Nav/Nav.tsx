@@ -1,8 +1,16 @@
-export default function Nav () {
-    return (
-        <nav className="nav-bar">
-            <span className="nav-button nav-button-active">Main</span> 
-            <span className="nav-button">Trends</span>
-        </nav>
-    )
+import useCommentsForm from '../../hooks/useCommentsForm'
+
+export default function Nav() {
+  const { handleSortComments, sortState } = useCommentsForm()
+
+  return (
+    <nav className='nav-bar'>
+      <button className={`nav-button ${sortState === 'main' && 'nav-button-active'}`} onClick={() => handleSortComments('main')}>
+        Main
+      </button>
+      <button className={`nav-button ${sortState === 'trends' && 'nav-button-active'}`} onClick={() => handleSortComments('trends')}>
+        Trends
+      </button>
+    </nav>
+  )
 }

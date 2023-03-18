@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import useAvatar from './useAvatar'
-import { addAnswer } from '../store/features/commentSlice'
-import { answer, commentId } from '../types'
+import { addAnswer, dislikeAnswer, likeAnswer } from '../store/features/commentSlice'
+import { answer } from '../types'
 
 const INITIAL_INPUT_VALUES = {
   content: '',
 }
 
-export default function useAnswersForm({ id: commentId }: commentId) {
+export default function useAnswersForm(commentId: number) {
   const dispatch = useDispatch()
   const { generateAvatar } = useAvatar()
   const [inputValues, setInputValues] = useState(INITIAL_INPUT_VALUES)
@@ -22,12 +22,15 @@ export default function useAnswersForm({ id: commentId }: commentId) {
     const { content } = inputValues
 
     const answer: answer = {
+      commentId,
       avatar,
       id,
       content,
+      likes: 0,
+      dislikes: 0,
     }
 
-    dispatch(addAnswer({ id: commentId, answer }))
+    dispatch(addAnswer({ commentId: commentId, answer }))
     setInputValues(INITIAL_INPUT_VALUES)
     setLoading(false)
   }
@@ -39,5 +42,25 @@ export default function useAnswersForm({ id: commentId }: commentId) {
     })
   }
 
-  return { handleSubmit, handleChange, loading, inputValues }
+  const handleLike = async (answer: answer) => {
+    // const newComment = {
+    //   ...comment,
+    //   likes: comment.likes + 1,
+    // }
+
+    // await updateComment(newComment)
+    dispatch(likeAnswer({ commentId: commentId, answerId: answer.id }))
+  }
+
+  const handleDislike = async (answer: answer) => {
+    // const newComment = {
+    //   ...comment,
+    //   dislikes: comment.dislikes + 1,
+    // }
+
+    // await updateComment(newComment)
+    dispatch(dislikeAnswer({ commentId: commentId, answerId: answer.id }))
+  }
+
+  return { handleSubmit, handleChange, handleLike, handleDislike, loading, inputValues }
 }

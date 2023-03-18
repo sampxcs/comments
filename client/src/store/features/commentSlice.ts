@@ -13,6 +13,21 @@ export const commentSlice = createSlice({
     addComment: (state, action) => {
       return (state = [...state, action.payload])
     },
+    sortComments: (state, action) => {
+      const sortBy = action.payload
+
+      if (sortBy === 'main') {
+        state = state.sort((prev, curr) => {
+          return prev.createdAt > curr.createdAt ? 1 : -1
+        })
+      }
+
+      if (sortBy === 'trends') {
+        state = state.sort((prev, curr) => {
+          return prev.likes + prev.dislikes + prev.answers.length > curr.likes + curr.dislikes + curr.answers.length ? 1 : -1
+        })
+      }
+    },
     likeComment: (state, action) => {
       const comment = state.find((c) => c.id === action.payload)
       if (comment) {
@@ -30,18 +45,49 @@ export const commentSlice = createSlice({
       return state
     },
     addAnswer: (state, action) => {
-      const { id, answer } = action.payload
+      const { commentId, answer } = action.payload
 
-      const comment = state.find((c) => c.id === id)
+      const comment = state.find((c) => c.id === commentId)
       if (comment) {
         const commentIndex = state.indexOf(comment)
         state[commentIndex].answers = [...state[commentIndex].answers, answer]
       }
       return state
     },
+    likeAnswer: (state, action) => {
+      const { commentId, answerId } = action.payload
+
+      const comment = state.find((c) => c.id === commentId)
+
+      if (comment) {
+        const answer = comment.answers.find((a) => a.id === answerId)
+        if (answer) {
+          const commentIndex = state.indexOf(comment)
+          const answerIndex = comment.answers.indexOf(answer)
+          state[commentIndex].answers[answerIndex].likes += 1
+        }
+      }
+      return state
+    },
+    dislikeAnswer: (state, action) => {
+      const { commentId, answerId } = action.payload
+
+      const comment = state.find((c) => c.id === commentId)
+
+      if (comment) {
+        const answer = comment.answers.find((a) => a.id === answerId)
+        if (answer) {
+          const commentIndex = state.indexOf(comment)
+          const answerIndex = comment.answers.indexOf(answer)
+          state[commentIndex].answers[answerIndex].dislikes += 1
+        }
+      }
+      return state
+    },
   },
 })
 
-export const { addComment, initComments, likeComment, dislikeComment, addAnswer } = commentSlice.actions
+export const { addComment, initComments, sortComments, likeComment, dislikeComment, addAnswer, likeAnswer, dislikeAnswer } =
+  commentSlice.actions
 
 export default commentSlice.reducer

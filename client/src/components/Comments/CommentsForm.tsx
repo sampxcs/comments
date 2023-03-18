@@ -10,14 +10,7 @@ export default function CommentsForm() {
   return (
     <form className='comment-form' onSubmit={handleSubmit}>
       <div className='textarea-container'>
-        <textarea
-          autoFocus
-          name='content'
-          onChange={handleChange}
-          placeholder='Add your comment...'
-          required
-          value={inputValues.content}
-        />
+        <textarea autoFocus name='content' onChange={handleChange} placeholder='Add your comment...' required value={inputValues.content} />
         <small>
           <EarthIcon width='0.75rem' /> Once published you will not be able to delete it, anyone can respond.
         </small>
@@ -31,7 +24,7 @@ export default function CommentsForm() {
             <LocationIcon width='1.25rem' />
           </div>
         </div>
-        <button disabled={loading}>{loading ? <Spinner /> : 'Send'}</button>
+        <button disabled={loading || !inputValues.content}>{loading ? <Spinner /> : 'Comment'}</button>
       </div>
     </form>
   )
