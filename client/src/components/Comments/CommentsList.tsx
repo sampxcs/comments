@@ -10,9 +10,19 @@ export default function CommentsList() {
   return (
     <div className='comments-container'>
       {commentsSort.length > 0 ? (
-        commentsSort.map(({ content, id, answers, createdAt, likes, dislikes, avatar }) => {
+        commentsSort.map(({ content, id, answers, createdAt, likes, dislikes, avatar, media }) => {
           return (
-            <Comment key={id} content={content} id={id} answers={answers} createdAt={createdAt} likes={likes} dislikes={dislikes} avatar={avatar} />
+            <Comment
+              answers={answers}
+              avatar={avatar}
+              content={content}
+              createdAt={createdAt}
+              dislikes={dislikes}
+              id={id}
+              key={id}
+              likes={likes}
+              media={media}
+            />
           )
         })
       ) : (

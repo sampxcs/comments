@@ -45,7 +45,8 @@ export const commentSlice = createSlice({
       return state
     },
     addAnswer: (state, action) => {
-      const { commentId, answer } = action.payload
+      const answer = action.payload
+      const { commentId } = answer
 
       const comment = state.find((c) => c.id === commentId)
       if (comment) {
@@ -55,12 +56,13 @@ export const commentSlice = createSlice({
       return state
     },
     likeAnswer: (state, action) => {
-      const { commentId, answerId } = action.payload
+      const answer = action.payload
+      const { id, commentId } = answer
 
       const comment = state.find((c) => c.id === commentId)
 
       if (comment) {
-        const answer = comment.answers.find((a) => a.id === answerId)
+        const answer = comment.answers.find((a) => a.id === id)
         if (answer) {
           const commentIndex = state.indexOf(comment)
           const answerIndex = comment.answers.indexOf(answer)
@@ -70,12 +72,13 @@ export const commentSlice = createSlice({
       return state
     },
     dislikeAnswer: (state, action) => {
-      const { commentId, answerId } = action.payload
+      const answer = action.payload
+      const { id, commentId } = answer
 
       const comment = state.find((c) => c.id === commentId)
 
       if (comment) {
-        const answer = comment.answers.find((a) => a.id === answerId)
+        const answer = comment.answers.find((a) => a.id === id)
         if (answer) {
           const commentIndex = state.indexOf(comment)
           const answerIndex = comment.answers.indexOf(answer)

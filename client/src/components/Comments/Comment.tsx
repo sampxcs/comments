@@ -7,7 +7,7 @@ import AnswersList from '../Answers/AnswersList'
 import useCommentsForm from '../../hooks/useCommentsForm'
 
 export default function Comment(comment: comment) {
-  const { content, answers, createdAt, likes, dislikes, id, avatar } = comment
+  const { content, answers, createdAt, likes, dislikes, id, avatar, media } = comment
   const { handleLike, handleDislike, handleShowAnswers, showAnswers } = useCommentsForm()
 
   return (
@@ -18,7 +18,20 @@ export default function Comment(comment: comment) {
           <img className='comment-avatar' src={`data:image/svg+xml;utf8,${avatar}`} alt='avatar' title='Anonymous' />
         </div>
         <div className='comment-right'>
-          <div className='comment-text'>{content}</div>
+          <div className='comment-text'>
+            <p>{content}</p>
+            {media.length ? (
+              <div className='comment-media'>
+                {media.map((preview, index) => (
+                  <div className='comment-media-preview-content' key={index}>
+                    <img src={URL.createObjectURL(preview)} className={`${index > 2 && 'hidden'}`} alt='pipe' width={100} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
           <div className='comment-date' title={createdAt}>
             {`${createdAt.split('T')[0]} ${createdAt.split('T')[1].split('.')[0]}`}
           </div>

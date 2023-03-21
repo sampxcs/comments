@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import { defaultAvatars } from '../utils'
-import getAvatar from '../services/getAvatar'
+import getAvatar from '../services/avatar/getAvatar'
 
 export default function useAvatar() {
   const generateAvatar = useCallback(() => {

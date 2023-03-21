@@ -1,4 +1,4 @@
-import { comment } from '../types'
+import { comment } from '../../types'
 
 const putComment = (data: comment) => {
   return fetch(`http://localhost:4000/comments/${data.id}`, {
